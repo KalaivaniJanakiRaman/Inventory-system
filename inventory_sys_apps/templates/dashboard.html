@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Product Dashboard</h2>
+<a href="{% url 'add-product' %}" class="btn btn-success">Add Product</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Description</th>
+            <th>Stock Quantity</th>
+            <th>Price</th>
+            <th>User</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.stock_quantity }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.user.username }}</td> 
+            <td>
+                <a href="{% url 'edit-product' product.pk %}" class="btn btn-warning">Edit</a>
+                <form action="{% url 'delete-product' product.pk %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+                <a href="{% url 'audit' product.pk %}" class="btn btn-info">View Audit History</a> <!-- Link to audit history -->
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Audit Trail for {{ product.name }}</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Version</th>
+            <th>Name</th>
+            <th>Stock Quantity</th>
+            <th>Price</th>
+            <th>User</th>
+            <th>Timestamp</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for audit in audit_trail %}
+        <tr>
+            <td>{{ audit.version }}</td>
+            <td>{{ audit.name }}</td>
+            <td>{{ audit.stock_quantity }}</td>
+            <td>{{ audit.price }}</td>
+            <td>{{ audit.user.username }}</td> 
+            <td>{{ audit.timestamp }}</td> 
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+
+{% endblock %}
